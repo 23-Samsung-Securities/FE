@@ -29,6 +29,18 @@ class SearchHouseFragment : Fragment() {
         
         initView()
 
+        binding.run {
+            buttonMap.setOnClickListener {
+                // 목표 설정(내 집 마련 - 지도) 화면으로 전환
+                val fragment = SearchMapFragment()
+
+                val transaction = requireActivity().supportFragmentManager.beginTransaction()
+                transaction.replace(R.id.fragmentContainerView, fragment)
+                transaction.addToBackStack(null)
+                transaction.commit()
+            }
+        }
+
         return binding.root
     }
     
