@@ -3,9 +3,20 @@ plugins {
     id 'org.jetbrains.kotlin.android'
 }
 
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
 android {
     namespace 'com.samsung.monimo'
     compileSdk 34
+
+    viewBinding {
+        enabled = true
+    }
+
+    buildFeatures {
+        buildConfig = true
+    }
 
     defaultConfig {
         applicationId "com.samsung.monimo"
@@ -15,6 +26,8 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField "String", "MAP_API_KEY", properties['map_client_id']
     }
 
     buildTypes {
@@ -38,6 +51,11 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.10.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+
+    // 네이버 지도 SDK
+    implementation 'com.naver.maps:map-sdk:3.17.0'
+    implementation 'com.google.android.gms:play-services-location:17.0.0'
+
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
