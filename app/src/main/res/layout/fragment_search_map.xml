@@ -26,4 +26,11 @@
 
     </com.naver.maps.map.MapView>
 
+    <include
+        android:id="@+id/includeBottomSheet"
+        layout="@layout/bottom_sheet_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/Widget.Material3.BottomSheet"
+        app:layout_behavior="@string/bottom_sheet_behavior" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
