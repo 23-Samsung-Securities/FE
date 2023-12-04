@@ -26,6 +26,18 @@ class ResultFragment : Fragment() {
 
         initView()
 
+        binding.run {
+            buttonProduct.setOnClickListener {
+                // 상품 추천 - 로딩 화면으로 전환
+                val fragment = SearchProductFragment()
+
+                val transaction = requireActivity().supportFragmentManager.beginTransaction()
+                transaction.replace(R.id.fragmentContainerView, fragment)
+                transaction.addToBackStack(null)
+                transaction.commit()
+            }
+        }
+
         return binding.root
     }
 
