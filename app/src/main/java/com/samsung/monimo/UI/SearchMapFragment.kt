@@ -22,6 +22,7 @@ import com.naver.maps.map.OnMapReadyCallback
 import com.naver.maps.map.util.FusedLocationSource
 import com.samsung.monimo.BuildConfig
 import com.samsung.monimo.R
+import com.samsung.monimo.UI.BottomSheet.SearchBottomSheet
 import com.samsung.monimo.databinding.FragmentSearchMapBinding
 
 class SearchMapFragment : Fragment(), OnMapReadyCallback {
@@ -129,5 +130,12 @@ class SearchMapFragment : Fragment(), OnMapReadyCallback {
                 }
             }
         }
+
+        modalBottomSheet()
+    }
+
+    private fun modalBottomSheet() {
+        val modal = SearchBottomSheet()
+        modal.show(requireActivity().supportFragmentManager, "지도")
     }
 }
