@@ -31,10 +31,18 @@ class SettingPeriodFragment : Fragment() {
 
         binding.run {
             buttonResult.setOnClickListener {
+                // 결과 화면으로 전환
+                val fragment = ResultFragment()
+
+                val transaction = requireActivity().supportFragmentManager.beginTransaction()
+                transaction.replace(R.id.fragmentContainerView, fragment)
+                transaction.addToBackStack(null)
+                transaction.commit()
             }
             buttonBack.setOnClickListener {
-                requireActivity().supportFragmentManager.popBackStack()
-                requireActivity().supportFragmentManager.popBackStack()
+                for (i in 0 until (requireActivity().supportFragmentManager.backStackEntryCount-1)) {
+                    requireActivity().supportFragmentManager.popBackStack()
+                }
             }
 
             seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
