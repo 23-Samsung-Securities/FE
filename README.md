@@ -34,3 +34,15 @@ footer
 
 Fixes : #21
 ```
+
+<br>
+
+## 🧱 Branch Strategy
+- Git flow
+  - main
+    - 배포 target
+  - dev
+  - feature/issue_number
+    - 예시: feature/#1
+  - hotfix/issue_number
+    - 예시: hotfix/#1
