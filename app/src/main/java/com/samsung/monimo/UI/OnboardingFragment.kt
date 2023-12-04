@@ -21,6 +21,17 @@ class OnboardingFragment : Fragment() {
 
         initView()
 
+        binding.run {
+            buttonNext.setOnClickListener {
+                // 목표 설정(내 집 마련 - 검색) 화면으로 전환
+                val fragment = SearchHouseFragment()
+
+                val transaction = requireActivity().supportFragmentManager.beginTransaction()
+                transaction.replace(R.id.fragmentContainerView, fragment)
+                transaction.addToBackStack(null)
+                transaction.commit()
+            }
+        }
 
         return binding.root
     }
