@@ -59,6 +59,9 @@ class ResultFragment : Fragment() {
                 transaction.addToBackStack(null)
                 transaction.commit()
             }
+            imageViewShareLink.setOnClickListener {
+                Toast.makeText(requireContext(), "복사가 완료되었습니다.", Toast.LENGTH_SHORT).show()
+            }
         }
 
         return binding.root
