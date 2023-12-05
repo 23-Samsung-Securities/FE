@@ -21,6 +21,15 @@ class SearchProductFragment : Fragment() {
     ): View? {
         binding = FragmentSearchProductBinding.inflate(inflater)
 
+        Handler(Looper.getMainLooper()).postDelayed({
+            // 상품 추천 화면으로 전환
+            val fragment = ProductFragment()
+
+            val transaction = requireActivity().supportFragmentManager.beginTransaction()
+            transaction.replace(R.id.fragmentContainerView, fragment)
+            transaction.addToBackStack(null)
+            transaction.commit()
+        }, 2000)
 
         return binding.root
     }
