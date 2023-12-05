@@ -1,4 +1,4 @@
-package com.samsung.monimo.UI
+package com.samsung.monimo.UI.product
 
 import android.graphics.BlendMode
 import android.graphics.BlendModeColorFilter

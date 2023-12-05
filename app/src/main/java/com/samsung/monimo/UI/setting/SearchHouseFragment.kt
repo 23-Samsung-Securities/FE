@@ -1,4 +1,4 @@
-package com.samsung.monimo.UI
+package com.samsung.monimo.UI.setting
 
 import android.graphics.BlendMode
 import android.graphics.BlendModeColorFilter
@@ -13,8 +13,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.samsung.monimo.R
+import com.samsung.monimo.UI.BottomSheet.SearchBottomSheet
 import com.samsung.monimo.databinding.FragmentSearchHouseBinding
-import kotlin.concurrent.fixedRateTimer
 
 class SearchHouseFragment : Fragment() {
 
@@ -38,6 +38,11 @@ class SearchHouseFragment : Fragment() {
                 transaction.replace(R.id.fragmentContainerView, fragment)
                 transaction.addToBackStack(null)
                 transaction.commit()
+            }
+            editTextSearchLocation.setOnEditorActionListener { textView, i, keyEvent ->
+                modalBottomSheet()
+
+                true
             }
         }
 
@@ -80,5 +85,10 @@ class SearchHouseFragment : Fragment() {
 
             textViewSearchHouse.text = spannableString
         }
+    }
+
+    private fun modalBottomSheet() {
+        val modal = SearchBottomSheet()
+        modal.show(requireActivity().supportFragmentManager, "검색")
     }
 }

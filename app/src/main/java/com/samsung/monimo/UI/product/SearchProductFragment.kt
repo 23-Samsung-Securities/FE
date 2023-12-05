@@ -1,4 +1,4 @@
-package com.samsung.monimo.UI
+package com.samsung.monimo.UI.product
 
 import android.os.Bundle
 import android.os.Handler

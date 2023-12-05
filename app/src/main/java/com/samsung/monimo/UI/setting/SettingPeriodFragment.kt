@@ -1,4 +1,4 @@
-package com.samsung.monimo.UI
+package com.samsung.monimo.UI.setting
 
 import android.graphics.BlendMode
 import android.graphics.BlendModeColorFilter
@@ -14,6 +14,7 @@ import android.view.ViewGroup
 import android.widget.SeekBar
 import androidx.fragment.app.Fragment
 import com.samsung.monimo.R
+import com.samsung.monimo.UI.result.ResultFragment
 import com.samsung.monimo.databinding.FragmentSettingPeriodBinding
 
 class SettingPeriodFragment : Fragment() {

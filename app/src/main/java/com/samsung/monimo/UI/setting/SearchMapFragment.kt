@@ -1,4 +1,4 @@
-package com.samsung.monimo.UI
+package com.samsung.monimo.UI.setting
 
 import android.graphics.BlendMode
 import android.graphics.BlendModeColorFilter
@@ -6,7 +6,6 @@ import android.graphics.Color
 import android.graphics.PorterDuff
 import android.os.Build
 import android.os.Bundle
-import android.os.SystemClock
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +13,6 @@ import androidx.fragment.app.Fragment
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.CameraAnimation
 import com.naver.maps.map.CameraUpdate
-import com.naver.maps.map.LocationTrackingMode
 import com.naver.maps.map.MapView
 import com.naver.maps.map.NaverMap
 import com.naver.maps.map.NaverMapSdk
@@ -48,6 +46,11 @@ class SearchMapFragment : Fragment(), OnMapReadyCallback {
         mapView.onCreate(savedInstanceState)
         mapView.getMapAsync(this)
 
+//        val sheetBehavior =
+//            BottomSheetBehavior.from(binding.includeStoreInfo.bottomSheetStoreInfo)
+//
+//        sheetBehavior.isHideable = true
+//        sheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
 
         NaverMapSdk.getInstance(requireContext()).client =
             NaverMapSdk.NaverCloudPlatformClient("${BuildConfig.MAP_API_KEY}")
@@ -95,6 +98,8 @@ class SearchMapFragment : Fragment(), OnMapReadyCallback {
     override fun onMapReady(map: NaverMap) {
         naverMap = map
 
+//        getHouseMapList()
+
         // 확대 축소
         naverMap.maxZoom = 18.0
         naverMap.minZoom = 10.0
@@ -104,7 +109,7 @@ class SearchMapFragment : Fragment(), OnMapReadyCallback {
         naverMap.isIndoorEnabled = true
 
         // 초기 위치 설정
-        val cameraUpdate = CameraUpdate.scrollTo((LatLng(37.496664, 127.0629804))).animate(
+        val cameraUpdate = CameraUpdate.scrollTo((LatLng(37.4883869, 127.0167954))).animate(
             CameraAnimation.Easing,
         )
         naverMap.moveCamera(cameraUpdate)

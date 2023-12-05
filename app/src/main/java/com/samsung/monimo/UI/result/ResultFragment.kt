@@ -1,4 +1,4 @@
-package com.samsung.monimo.UI
+package com.samsung.monimo.UI.result
 
 import android.graphics.BlendMode
 import android.graphics.BlendModeColorFilter
@@ -11,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.samsung.monimo.R
+import com.samsung.monimo.UI.product.SearchProductFragment
 import com.samsung.monimo.databinding.FragmentResultBinding
 
 class ResultFragment : Fragment() {

@@ -11,12 +11,14 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.samsung.monimo.R
-import com.samsung.monimo.UI.SettingPeriodFragment
+import com.samsung.monimo.UI.setting.SettingPeriodFragment
 import com.samsung.monimo.databinding.BottomSheetSearchBinding
 
 class SearchBottomSheet : BottomSheetDialogFragment() {
 
     lateinit var binding: BottomSheetSearchBinding
+
+//    override fun getTheme(): Int = R.style.AppBottomSheetDialogTheme
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val bottomSheetDialog = BottomSheetDialog(requireContext(), theme)
@@ -25,6 +27,12 @@ class SearchBottomSheet : BottomSheetDialogFragment() {
 
         val behavior = BottomSheetBehavior.from(contentView.parent as View)
 
+//        // Bottom Sheet의 높이를 고정하고자 하는 값으로 설정
+//        behavior.peekHeight = resources.getDimensionPixelSize(R.dimen.bottom_sheet_height)
+//
+//        // Bottom Sheet의 상태를 COLLAPSED로 설정하여 높이를 고정시킵니다.
+// //        behavior.state = BottomSheetBehavior.STATE_COLLAPSED
+//        // 사용자가 Bottom Sheet를 축소할 수 없도록 설정
         behavior.skipCollapsed = true
 
         return bottomSheetDialog
@@ -38,6 +46,10 @@ class SearchBottomSheet : BottomSheetDialogFragment() {
         super.onCreateView(inflater, container, savedInstanceState)
 
         binding = BottomSheetSearchBinding.inflate(inflater)
+
+//        val layoutParams = view?.layoutParams
+//        layoutParams?.height = resources.getDimensionPixelSize(R.dimen.bottom_sheet_height) // 원하는 높이 값으로 설정
+//        view?.layoutParams = layoutParams
 
         return binding.root
     }
