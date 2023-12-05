@@ -7,16 +7,26 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.samsung.monimo.API.model.ApartmentListResult
+import com.samsung.monimo.MainActivity
 import com.samsung.monimo.R
+import com.samsung.monimo.UI.setting.Adapter.ApartmentListAdapter
 import com.samsung.monimo.UI.setting.SettingPeriodFragment
+import com.samsung.monimo.UI.setting.viewModel.ApartmentListViewModel
 import com.samsung.monimo.databinding.BottomSheetSearchBinding
 
 class SearchBottomSheet : BottomSheetDialogFragment() {
 
     lateinit var binding: BottomSheetSearchBinding
+    lateinit var mainActivity: MainActivity
+    lateinit var viewModel: ApartmentListViewModel
+
+    var apartmentList = mutableListOf<ApartmentListResult>()
 
 //    override fun getTheme(): Int = R.style.AppBottomSheetDialogTheme
 
@@ -46,6 +56,14 @@ class SearchBottomSheet : BottomSheetDialogFragment() {
         super.onCreateView(inflater, container, savedInstanceState)
 
         binding = BottomSheetSearchBinding.inflate(inflater)
+        mainActivity = activity as MainActivity
+        viewModel = ViewModelProvider(requireActivity())[ApartmentListViewModel::class.java]
+
+        viewModel.run {
+            apartmentInfoList.observe(mainActivity) {
+                apartmentList = it
+            }
+        }
 
 //        val layoutParams = view?.layoutParams
 //        layoutParams?.height = resources.getDimensionPixelSize(R.dimen.bottom_sheet_height) // 원하는 높이 값으로 설정
@@ -78,6 +96,12 @@ class SearchBottomSheet : BottomSheetDialogFragment() {
             transaction.commit()
 
             dismiss()
+        }
+
+        binding.recyclerViewLocation.run {
+            adapter = ApartmentListAdapter(apartmentList.toTypedArray(), mainActivity.supportFragmentManager)
+
+            layoutManager = LinearLayoutManager(mainActivity)
         }
     }
 }

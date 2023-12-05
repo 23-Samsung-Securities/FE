@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.CameraAnimation
 import com.naver.maps.map.CameraUpdate
@@ -46,11 +47,11 @@ class SearchMapFragment : Fragment(), OnMapReadyCallback {
         mapView.onCreate(savedInstanceState)
         mapView.getMapAsync(this)
 
-//        val sheetBehavior =
-//            BottomSheetBehavior.from(binding.includeStoreInfo.bottomSheetStoreInfo)
-//
-//        sheetBehavior.isHideable = true
-//        sheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+        val sheetBehavior =
+            BottomSheetBehavior.from(binding.includeBottomSheet.bottomSheetLayout)
+
+        sheetBehavior.isHideable = true
+        sheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
 
         NaverMapSdk.getInstance(requireContext()).client =
             NaverMapSdk.NaverCloudPlatformClient("${BuildConfig.MAP_API_KEY}")
@@ -136,7 +137,7 @@ class SearchMapFragment : Fragment(), OnMapReadyCallback {
             }
         }
 
-        modalBottomSheet()
+//        modalBottomSheet()
     }
 
     private fun modalBottomSheet() {
