@@ -6,10 +6,12 @@ import android.graphics.Color
 import android.graphics.PorterDuff
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.CameraAnimation
@@ -18,15 +20,22 @@ import com.naver.maps.map.MapView
 import com.naver.maps.map.NaverMap
 import com.naver.maps.map.NaverMapSdk
 import com.naver.maps.map.OnMapReadyCallback
+import com.naver.maps.map.overlay.Marker
+import com.naver.maps.map.overlay.OverlayImage
 import com.naver.maps.map.util.FusedLocationSource
+import com.samsung.monimo.API.model.ApartmentListResult
 import com.samsung.monimo.BuildConfig
+import com.samsung.monimo.MainActivity
 import com.samsung.monimo.R
 import com.samsung.monimo.UI.BottomSheet.SearchBottomSheet
+import com.samsung.monimo.UI.setting.viewModel.ApartmentListViewModel
 import com.samsung.monimo.databinding.FragmentSearchMapBinding
 
 class SearchMapFragment : Fragment(), OnMapReadyCallback {
 
     lateinit var binding: FragmentSearchMapBinding
+    lateinit var viewModel: ApartmentListViewModel
+    lateinit var mainActivity: MainActivity
 
     private lateinit var mapView: MapView
     private lateinit var naverMap: NaverMap
@@ -34,12 +43,22 @@ class SearchMapFragment : Fragment(), OnMapReadyCallback {
     private val LOCATION_PERMISSTION_REQUEST_CODE: Int = 1000
     private lateinit var locationSource: FusedLocationSource // 위치를 반환하는 구현체
 
+    var apartmentList = mutableListOf<ApartmentListResult>()
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
         binding = FragmentSearchMapBinding.inflate(inflater)
+        mainActivity = activity as MainActivity
+        viewModel = ViewModelProvider(requireActivity())[ApartmentListViewModel::class.java]
+
+        viewModel.run {
+            apartmentInfoList.observe(mainActivity) {
+                apartmentList = it
+            }
+        }
 
         initView()
 
@@ -99,7 +118,8 @@ class SearchMapFragment : Fragment(), OnMapReadyCallback {
     override fun onMapReady(map: NaverMap) {
         naverMap = map
 
-//        getHouseMapList()
+        viewModel.getApartmentList(mainActivity)
+        getHouseMapList()
 
         // 확대 축소
         naverMap.maxZoom = 18.0
@@ -136,12 +156,42 @@ class SearchMapFragment : Fragment(), OnMapReadyCallback {
                 }
             }
         }
-
-//        modalBottomSheet()
     }
 
-    private fun modalBottomSheet() {
-        val modal = SearchBottomSheet()
+    private fun modalBottomSheet(search: String) {
+        val modal = SearchBottomSheet(search)
         modal.show(requireActivity().supportFragmentManager, "지도")
+    }
+
+    fun getHouseMapList() {
+
+        // Marker
+        val markers = mutableListOf<Marker>()
+
+        for (i in 0 until apartmentList.size) {
+            val marker = Marker()
+            var latitude = apartmentList?.get(i)!!.latitude.toDouble()
+            var longitude = apartmentList?.get(i)!!.longitude.toDouble()
+            marker.position = LatLng(latitude, longitude)
+            marker.icon = OverlayImage.fromResource(R.drawable.ic_marker)
+            markers.add(marker)
+        }
+
+        for (m in 0 until markers.size) {
+            markers[m].map = naverMap
+            markers[m].setOnClickListener {
+                for (i in 0 until markers.size) {
+                    if (markers[i].icon == OverlayImage.fromResource(R.drawable.ic_marker_selected)) {
+                        markers[i].icon =
+                            OverlayImage.fromResource(R.drawable.ic_marker)
+                    }
+                }
+                markers[m].icon = OverlayImage.fromResource(R.drawable.ic_marker_selected)
+
+                modalBottomSheet(apartmentList[m].apartmentName)
+
+                true
+            }
+        }
     }
 }
