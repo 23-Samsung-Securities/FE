@@ -4,19 +4,31 @@ import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.samsung.monimo.API.model.ApartmentListResult
+import com.samsung.monimo.MainActivity
 import com.samsung.monimo.R
+import com.samsung.monimo.UI.setting.Adapter.ApartmentListAdapter
 import com.samsung.monimo.UI.setting.SettingPeriodFragment
+import com.samsung.monimo.UI.setting.viewModel.ApartmentListViewModel
+import com.samsung.monimo.Utils.MyApplication
 import com.samsung.monimo.databinding.BottomSheetSearchBinding
 
-class SearchBottomSheet : BottomSheetDialogFragment() {
+class SearchBottomSheet(var search: String) : BottomSheetDialogFragment() {
 
     lateinit var binding: BottomSheetSearchBinding
+    lateinit var mainActivity: MainActivity
+    lateinit var viewModel: ApartmentListViewModel
+
+    var apartmentList = mutableListOf<ApartmentListResult>()
 
 //    override fun getTheme(): Int = R.style.AppBottomSheetDialogTheme
 
@@ -46,6 +58,14 @@ class SearchBottomSheet : BottomSheetDialogFragment() {
         super.onCreateView(inflater, container, savedInstanceState)
 
         binding = BottomSheetSearchBinding.inflate(inflater)
+        mainActivity = activity as MainActivity
+        viewModel = ViewModelProvider(requireActivity())[ApartmentListViewModel::class.java]
+
+        viewModel.run {
+            apartmentInfoList.observe(mainActivity) {
+                apartmentList = it
+            }
+        }
 
 //        val layoutParams = view?.layoutParams
 //        layoutParams?.height = resources.getDimensionPixelSize(R.dimen.bottom_sheet_height) // 원하는 높이 값으로 설정
@@ -68,16 +88,16 @@ class SearchBottomSheet : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.root.setOnClickListener {
-            // 목표 설정(내 집 마련 - 기간 설정) 화면으로 전환
-            val fragment = SettingPeriodFragment()
-
-            val transaction = requireActivity().supportFragmentManager.beginTransaction()
-            transaction.replace(R.id.fragmentContainerView, fragment)
-            transaction.addToBackStack(null)
-            transaction.commit()
-
+        binding.buttonClose.setOnClickListener {
             dismiss()
+        }
+
+        binding.editTextSearchBottomSheet.setText(search)
+
+        binding.recyclerViewLocation.run {
+            adapter = ApartmentListAdapter(apartmentList.toTypedArray(), mainActivity.supportFragmentManager)
+
+            layoutManager = LinearLayoutManager(mainActivity)
         }
     }
 }

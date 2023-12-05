@@ -12,13 +12,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.samsung.monimo.R
 import com.samsung.monimo.UI.BottomSheet.SearchBottomSheet
+import com.samsung.monimo.UI.setting.viewModel.ApartmentListViewModel
 import com.samsung.monimo.databinding.FragmentSearchHouseBinding
 
 class SearchHouseFragment : Fragment() {
 
     lateinit var binding: FragmentSearchHouseBinding
+
+    lateinit var viewModel: ApartmentListViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -26,8 +30,11 @@ class SearchHouseFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View? {
         binding = FragmentSearchHouseBinding.inflate(inflater)
+        viewModel = ViewModelProvider(requireActivity())[ApartmentListViewModel::class.java]
         
         initView()
+
+        viewModel.getApartmentList(requireContext())
 
         binding.run {
             buttonMap.setOnClickListener {
@@ -40,7 +47,7 @@ class SearchHouseFragment : Fragment() {
                 transaction.commit()
             }
             editTextSearchLocation.setOnEditorActionListener { textView, i, keyEvent ->
-                modalBottomSheet()
+                modalBottomSheet(editTextSearchLocation.text.toString())
 
                 true
             }
@@ -87,8 +94,8 @@ class SearchHouseFragment : Fragment() {
         }
     }
 
-    private fun modalBottomSheet() {
-        val modal = SearchBottomSheet()
+    private fun modalBottomSheet(search: String) {
+        val modal = SearchBottomSheet(search)
         modal.show(requireActivity().supportFragmentManager, "검색")
     }
 }
