@@ -4,6 +4,7 @@ import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,9 +19,10 @@ import com.samsung.monimo.R
 import com.samsung.monimo.UI.setting.Adapter.ApartmentListAdapter
 import com.samsung.monimo.UI.setting.SettingPeriodFragment
 import com.samsung.monimo.UI.setting.viewModel.ApartmentListViewModel
+import com.samsung.monimo.Utils.MyApplication
 import com.samsung.monimo.databinding.BottomSheetSearchBinding
 
-class SearchBottomSheet : BottomSheetDialogFragment() {
+class SearchBottomSheet(var search: String) : BottomSheetDialogFragment() {
 
     lateinit var binding: BottomSheetSearchBinding
     lateinit var mainActivity: MainActivity
@@ -86,17 +88,11 @@ class SearchBottomSheet : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.root.setOnClickListener {
-            // 목표 설정(내 집 마련 - 기간 설정) 화면으로 전환
-            val fragment = SettingPeriodFragment()
-
-            val transaction = requireActivity().supportFragmentManager.beginTransaction()
-            transaction.replace(R.id.fragmentContainerView, fragment)
-            transaction.addToBackStack(null)
-            transaction.commit()
-
+        binding.buttonClose.setOnClickListener {
             dismiss()
         }
+
+        binding.editTextSearchBottomSheet.setText(search)
 
         binding.recyclerViewLocation.run {
             adapter = ApartmentListAdapter(apartmentList.toTypedArray(), mainActivity.supportFragmentManager)

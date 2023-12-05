@@ -15,11 +15,14 @@ import android.widget.SeekBar
 import androidx.fragment.app.Fragment
 import com.samsung.monimo.R
 import com.samsung.monimo.UI.result.ResultFragment
+import com.samsung.monimo.Utils.MyApplication
 import com.samsung.monimo.databinding.FragmentSettingPeriodBinding
 
 class SettingPeriodFragment : Fragment() {
 
     lateinit var binding: FragmentSettingPeriodBinding
+
+    var settingPeriod = 0
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,6 +35,8 @@ class SettingPeriodFragment : Fragment() {
 
         binding.run {
             buttonResult.setOnClickListener {
+                MyApplication.selectedPeriod = settingPeriod
+                
                 // 결과 화면으로 전환
                 val fragment = ResultFragment()
 
@@ -41,7 +46,7 @@ class SettingPeriodFragment : Fragment() {
                 transaction.commit()
             }
             buttonBack.setOnClickListener {
-                for (i in 0 until (requireActivity().supportFragmentManager.backStackEntryCount-1)) {
+                for (i in 0 until (requireActivity().supportFragmentManager.backStackEntryCount - 1)) {
                     requireActivity().supportFragmentManager.popBackStack()
                 }
             }
@@ -49,6 +54,7 @@ class SettingPeriodFragment : Fragment() {
             seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
                 override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                     textViewSettingPeriodValue.text = progress.toString() + "년"
+                    settingPeriod = progress
                 }
 
                 override fun onStartTrackingTouch(seekBar: SeekBar?) {
@@ -97,6 +103,8 @@ class SettingPeriodFragment : Fragment() {
             )
 
             textViewSettingPeriodLocation.text = spannableString
+
+            textViewSettingLocationValue.text = MyApplication.selectedApartmentName
         }
     }
 }

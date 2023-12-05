@@ -47,7 +47,7 @@ class SearchHouseFragment : Fragment() {
                 transaction.commit()
             }
             editTextSearchLocation.setOnEditorActionListener { textView, i, keyEvent ->
-                modalBottomSheet()
+                modalBottomSheet(editTextSearchLocation.text.toString())
 
                 true
             }
@@ -94,8 +94,8 @@ class SearchHouseFragment : Fragment() {
         }
     }
 
-    private fun modalBottomSheet() {
-        val modal = SearchBottomSheet()
+    private fun modalBottomSheet(search: String) {
+        val modal = SearchBottomSheet(search)
         modal.show(requireActivity().supportFragmentManager, "검색")
     }
 }
