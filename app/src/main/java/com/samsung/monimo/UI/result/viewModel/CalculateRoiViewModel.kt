@@ -1,4 +1,4 @@
-package com.samsung.monimo.UI.setting.viewModel
+package com.samsung.monimo.UI.result.viewModel
 
 import android.content.Context
 import android.util.Log

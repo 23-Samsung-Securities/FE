@@ -15,7 +15,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.samsung.monimo.MainActivity
 import com.samsung.monimo.R
 import com.samsung.monimo.UI.product.SearchProductFragment
-import com.samsung.monimo.UI.setting.viewModel.CalculateRoiViewModel
+import com.samsung.monimo.UI.result.viewModel.CalculateRoiViewModel
 import com.samsung.monimo.databinding.FragmentResultBinding
 
 class ResultFragment : Fragment() {

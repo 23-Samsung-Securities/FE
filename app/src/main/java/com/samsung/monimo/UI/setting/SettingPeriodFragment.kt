@@ -14,11 +14,8 @@ import android.view.ViewGroup
 import android.widget.SeekBar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.samsung.monimo.API.model.CalculateRoiResponseModel
 import com.samsung.monimo.R
-import com.samsung.monimo.UI.result.ResultFragment
-import com.samsung.monimo.UI.setting.viewModel.ApartmentListViewModel
-import com.samsung.monimo.UI.setting.viewModel.CalculateRoiViewModel
+import com.samsung.monimo.UI.result.viewModel.CalculateRoiViewModel
 import com.samsung.monimo.Utils.MyApplication
 import com.samsung.monimo.databinding.FragmentSettingPeriodBinding
 
