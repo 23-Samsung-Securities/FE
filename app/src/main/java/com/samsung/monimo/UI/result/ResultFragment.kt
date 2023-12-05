@@ -6,24 +6,46 @@ import android.graphics.Color
 import android.graphics.PorterDuff
 import android.os.Build
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import com.samsung.monimo.MainActivity
 import com.samsung.monimo.R
 import com.samsung.monimo.UI.product.SearchProductFragment
+import com.samsung.monimo.UI.setting.viewModel.CalculateRoiViewModel
 import com.samsung.monimo.databinding.FragmentResultBinding
 
 class ResultFragment : Fragment() {
 
     lateinit var binding: FragmentResultBinding
+    lateinit var viewModel: CalculateRoiViewModel
+    lateinit var mainActivity: MainActivity
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
     ): View? {
-
         binding = FragmentResultBinding.inflate(inflater)
+        mainActivity = activity as MainActivity
+        viewModel = ViewModelProvider(requireActivity())[CalculateRoiViewModel::class.java]
+        viewModel.run {
+            apartmentName.observe(mainActivity) {
+                binding.textViewSettingBuildingValue.text = it.toString()
+            }
+            period.observe(mainActivity) {
+                binding.textViewSettingPeriodValue.text = it.toString()
+            }
+            roi.observe(mainActivity) {
+                binding.run {
+                    textViewRequiredEarningValue.text = it.toString()
+                    textViewRoi.text = it.toString() + "% 수익률"
+                }
+            }
+        }
 
         initView()
 
