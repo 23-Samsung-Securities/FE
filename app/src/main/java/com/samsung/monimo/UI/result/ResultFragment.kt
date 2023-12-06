@@ -41,13 +41,13 @@ class ResultFragment : Fragment() {
                 binding.textViewSettingBuildingValue.text = it.toString()
             }
             period.observe(mainActivity) {
-                binding.textViewSettingPeriodValue.text = it.toString()
+                binding.textViewSettingPeriodValue.text = it.toString() + "년"
             }
             roi.observe(mainActivity) {
                 binding.run {
                     MyApplication.roi = it.toString()
-                    textViewRequiredEarningValue.text = it.toString()
-                    textViewRoi.text = it.toString() + "% 수익률"
+                    textViewRequiredEarningValue.text = it.toString() + "%"
+                    textViewRoi.text = it.toString() + "%의 수익률"
                 }
             }
         }

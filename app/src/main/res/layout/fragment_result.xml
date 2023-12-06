@@ -142,7 +142,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/pretendard_semi_bold"
-                android:text="현재 자산의 "
+                android:text="매년 "
                 android:textSize="16sp" />
 
             <TextView
@@ -150,7 +150,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/pretendard_semi_bold"
-                android:text="% 수익률"
+                android:text="%의 수익률"
                 android:textColor="@color/main_text_color"
                 android:textSize="16sp" />
 
@@ -159,20 +159,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/pretendard_semi_bold"
-                android:text="을 내면"
+                android:text="이 필요합니다."
                 android:textSize="16sp" />
 
         </LinearLayout>
-
-        <TextView
-            android:id="@+id/textView6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_gravity="center"
-            android:fontFamily="@font/pretendard_semi_bold"
-            android:text="구매할 수 있습니다."
-            android:textSize="16sp" />
 
     </LinearLayout>
 
