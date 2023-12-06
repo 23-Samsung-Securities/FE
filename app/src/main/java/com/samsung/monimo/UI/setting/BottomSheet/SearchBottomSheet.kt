@@ -4,7 +4,6 @@ import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -30,8 +29,6 @@ class SearchBottomSheet(var search: String) : BottomSheetDialogFragment() {
 
     var apartmentList = mutableListOf<ApartmentListResult>()
 
-//    override fun getTheme(): Int = R.style.AppBottomSheetDialogTheme
-
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val bottomSheetDialog = BottomSheetDialog(requireContext(), theme)
         val contentView = View.inflate(context, R.layout.bottom_sheet_search, null)
@@ -42,9 +39,9 @@ class SearchBottomSheet(var search: String) : BottomSheetDialogFragment() {
 //        // Bottom Sheet의 높이를 고정하고자 하는 값으로 설정
 //        behavior.peekHeight = resources.getDimensionPixelSize(R.dimen.bottom_sheet_height)
 //
-//        // Bottom Sheet의 상태를 COLLAPSED로 설정하여 높이를 고정시킵니다.
-// //        behavior.state = BottomSheetBehavior.STATE_COLLAPSED
-//        // 사용자가 Bottom Sheet를 축소할 수 없도록 설정
+        // Bottom Sheet의 상태를 COLLAPSED로 설정하여 높이를 고정시킵니다.
+//         behavior.state = BottomSheetBehavior.STATE_COLLAPSED
+        // 사용자가 Bottom Sheet를 축소할 수 없도록 설정
         behavior.skipCollapsed = true
 
         return bottomSheetDialog
@@ -94,10 +91,31 @@ class SearchBottomSheet(var search: String) : BottomSheetDialogFragment() {
 
         binding.editTextSearchBottomSheet.setText(search)
 
-        binding.recyclerViewLocation.run {
-            adapter = ApartmentListAdapter(apartmentList.toTypedArray(), mainActivity.supportFragmentManager)
+        val listAdapter = ApartmentListAdapter(
+            apartmentList.toTypedArray(),
+        ) // 어댑터
 
+        binding.recyclerViewLocation.run {
+            adapter = listAdapter
             layoutManager = LinearLayoutManager(mainActivity)
+
+            listAdapter.itemClickListener = object : ApartmentListAdapter.OnItemClickListener {
+                override fun onItemClick(position: Int) {
+                    // 클릭 시 이벤트 작성
+                    MyApplication.selectedApartmentId = apartmentList.get(position).apartmentId.toInt()
+                    MyApplication.selectedApartmentName = apartmentList.get(position).apartmentName
+
+                    // 목표 설정(내 집 마련 - 기간 설정) 화면으로 전환
+                    val fragment = SettingPeriodFragment()
+
+                    val transaction = requireActivity().supportFragmentManager.beginTransaction()
+                    transaction.replace(R.id.fragmentContainerView, fragment)
+                    transaction.addToBackStack(null)
+                    transaction.commit()
+
+                    dismiss()
+                }
+            }
         }
     }
 }
