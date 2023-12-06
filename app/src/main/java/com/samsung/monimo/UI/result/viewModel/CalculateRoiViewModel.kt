@@ -37,14 +37,6 @@ class CalculateRoiViewModel : ViewModel() {
                     roi.value = String.format("%.2f", result?.result).toDouble()
                     apartmentName.value = MyApplication.selectedApartmentName
                     period.value = MyApplication.selectedPeriod
-
-                    // 결과 화면으로 전환
-                    val fragment = ResultFragment()
-
-                    val transaction = manager.beginTransaction()
-                    transaction.replace(R.id.fragmentContainerView, fragment)
-                    transaction.addToBackStack(null)
-                    transaction.commit()
                 } else {
                     // 통신이 실패한 경우(응답코드 3xx, 4xx 등)
                     Log.d("##", "onResponse 실패: " + response.code())

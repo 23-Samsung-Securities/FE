@@ -15,6 +15,8 @@ import android.widget.SeekBar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.samsung.monimo.R
+import com.samsung.monimo.UI.result.ResultFragment
+import com.samsung.monimo.UI.result.ResultLoadingFragment
 import com.samsung.monimo.UI.result.viewModel.CalculateRoiViewModel
 import com.samsung.monimo.Utils.MyApplication
 import com.samsung.monimo.databinding.FragmentSettingPeriodBinding
@@ -41,6 +43,14 @@ class SettingPeriodFragment : Fragment() {
                 MyApplication.selectedPeriod = settingPeriod
 
                 viewModel.calculateRoi(requireContext(), requireActivity().supportFragmentManager)
+
+                // 결과 화면으로 전환
+                val fragment = ResultLoadingFragment()
+
+                val transaction = requireActivity().supportFragmentManager.beginTransaction()
+                transaction.replace(R.id.fragmentContainerView, fragment)
+                transaction.addToBackStack(null)
+                transaction.commit()
             }
             buttonBack.setOnClickListener {
                 for (i in 0 until (requireActivity().supportFragmentManager.backStackEntryCount - 1)) {
