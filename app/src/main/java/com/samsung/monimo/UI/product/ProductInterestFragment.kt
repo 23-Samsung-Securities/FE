@@ -55,6 +55,14 @@ class ProductInterestFragment : Fragment() {
             }
         }
         viewModel.getInterestProductList(requireContext(), categoryList[0])
+
+        binding.run {
+            recyclerViewInterestList.run {
+                adapter = CategoryAdapter(categoryList.toTypedArray(), requireActivity())
+
+                layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            }
+        }
         
         return binding.root
     }
