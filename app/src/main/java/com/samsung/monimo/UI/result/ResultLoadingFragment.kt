@@ -22,6 +22,16 @@ class ResultLoadingFragment : Fragment() {
     ): View? {
         binding = FragmentResultLoadingBinding.inflate(inflater)
 
+        Handler(Looper.getMainLooper()).postDelayed({
+            // 상품 추천 화면으로 전환
+            val fragment = ResultFragment()
+
+            val transaction = requireActivity().supportFragmentManager.beginTransaction()
+            transaction.replace(R.id.fragmentContainerView, fragment)
+            transaction.addToBackStack(null)
+            transaction.commit()
+        }, 2500)
+
         return binding.root
     }
 }
