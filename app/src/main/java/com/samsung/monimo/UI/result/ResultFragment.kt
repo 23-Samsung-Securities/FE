@@ -15,13 +15,16 @@ import androidx.lifecycle.ViewModelProvider
 import com.samsung.monimo.MainActivity
 import com.samsung.monimo.R
 import com.samsung.monimo.UI.product.SearchProductFragment
+import com.samsung.monimo.UI.product.viewModel.ProductViewModel
 import com.samsung.monimo.UI.result.viewModel.CalculateRoiViewModel
+import com.samsung.monimo.Utils.MyApplication
 import com.samsung.monimo.databinding.FragmentResultBinding
 
 class ResultFragment : Fragment() {
 
     lateinit var binding: FragmentResultBinding
     lateinit var viewModel: CalculateRoiViewModel
+    lateinit var productViewModel: ProductViewModel
     lateinit var mainActivity: MainActivity
 
     override fun onCreateView(
@@ -32,6 +35,7 @@ class ResultFragment : Fragment() {
         binding = FragmentResultBinding.inflate(inflater)
         mainActivity = activity as MainActivity
         viewModel = ViewModelProvider(requireActivity())[CalculateRoiViewModel::class.java]
+        productViewModel = ViewModelProvider(requireActivity())[ProductViewModel::class.java]
         viewModel.run {
             apartmentName.observe(mainActivity) {
                 binding.textViewSettingBuildingValue.text = it.toString()
@@ -41,6 +45,7 @@ class ResultFragment : Fragment() {
             }
             roi.observe(mainActivity) {
                 binding.run {
+                    MyApplication.roi = it.toString()
                     textViewRequiredEarningValue.text = it.toString()
                     textViewRoi.text = it.toString() + "% 수익률"
                 }
@@ -51,6 +56,8 @@ class ResultFragment : Fragment() {
 
         binding.run {
             buttonProduct.setOnClickListener {
+
+                productViewModel.getEarningProductList(requireContext(), "top100")
                 // 상품 추천 - 로딩 화면으로 전환
                 val fragment = SearchProductFragment()
 

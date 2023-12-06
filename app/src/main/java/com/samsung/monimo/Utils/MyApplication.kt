@@ -9,5 +9,7 @@ class MyApplication : Application() {
         var selectedApartmentId = 0
 
         var selectedPeriod = 0
+
+        var roi = ""
     }
 }
