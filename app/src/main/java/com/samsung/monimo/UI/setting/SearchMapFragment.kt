@@ -6,7 +6,6 @@ import android.graphics.Color
 import android.graphics.PorterDuff
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -130,7 +129,7 @@ class SearchMapFragment : Fragment(), OnMapReadyCallback {
         naverMap.isIndoorEnabled = true
 
         // 초기 위치 설정
-        val cameraUpdate = CameraUpdate.scrollTo((LatLng(37.4883869, 127.0167954))).animate(
+        val cameraUpdate = CameraUpdate.scrollTo((LatLng(37.495974, 127.0212844))).animate(
             CameraAnimation.Easing,
         )
         naverMap.moveCamera(cameraUpdate)
@@ -164,7 +163,6 @@ class SearchMapFragment : Fragment(), OnMapReadyCallback {
     }
 
     fun getHouseMapList() {
-
         // Marker
         val markers = mutableListOf<Marker>()
 
